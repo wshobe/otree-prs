@@ -11,3 +11,7 @@ __pycache__/
 *.py[cod]
 .DS_Store
 merge.ps1
+/db.sqlite3
+/__temp_migrations
+/__pycache__
+/.DS_Store
