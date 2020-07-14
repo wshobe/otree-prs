@@ -1,0 +1,166 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Auction: Round {{ subsession.round_number }}, Player #{{player.id_in_subsession}}
+{% endblock %}
+
+{% block content %}
+
+	
+    <table style="width: 100%; padding: 10px;border: 1px solid black;">
+		<tr><td style="width: 50%;">
+    		<ul>
+    		<li>You own {{ player.permits }} permits.</li>
+    		{% if player.min_production > 0 %}
+			<li>You are required to produce with at least {{ player.min_production }} plant{% if player.min_production > 1 %}s{% endif %}.</li>
+			{% endif %}
+    		<li>Each of your plants requires {{ player.emission_intensity }} 
+				permit{%if player.emission_intensity > 1 %}s{% endif %} to produce.</li>
+    		<li>Your current cash balance is <b>{{ player.money }}</b>. 
+				<!--You can submit bids for any number of permits, as long as the bid total 
+				does not exceed your cash balance plus the sum of permit values shown in the table below. -->
+			</li>
+			<!-- ><li>The sum of your bids, must not exceed <b>{{max_bid_dollar_value}}</b>.</li> -->
+		</ul>
+		</td>
+		<td> 
+			<ul>
+			<li>Output price this period: <b>{{ subsession.output_price }}</b> per unit produced.</li>
+			<li>Permits for sale at auction this period: {{ permits_available }}</li>
+			 <li style="margin-left: 15pt;">Permits will be sold at a single uniform price equal to the value of the <em>highest rejected bid</em>.</li>
+			<li>Reserve price (minimum bid): {{Constants.reserve_price}}.</li>
+			<li>There are {{ num_participants }} players (including yourself) participating.</li>
+			</ul>
+			<table><tr><td>
+	    		<ul>
+				<li>There are {{session.config.price_containment_reserve_amount}} permits to be made available if the auction price 
+					would close above {{session.config.price_containment_trigger}}.</li>
+				{% if session.config.ecr_treatment != 'None' %}	
+				<li>If the auction price would close below {{session.config.ecr_trigger_price}}, 
+					then up to {{session.config.initial_ecr_reserve_amount}} permits may be retired.</li>
+				{% endif %}
+			</td></tr></table>
+			</ul>
+		</td></tr>
+    </table>
+	<br />	
+    {{ bid_formset.management_form }}
+	
+	<p style="font-size: 16px;color: #9d4e15;">Note: Producing without permits incurs a heavy fine, so please consider bidding for all permits that
+		you think will help you earn money.</p>
+	{%if player.emission_intensity > 1 %}
+		<p style="font-size: 16px;color: #9d4e15;">Each of your bids will be for {{ player.emission_intensity }} permits.</p>
+		
+	{% endif %}
+	
+	
+	<table style="border: none;  align: center; margin-right: 20px;">
+		<tr style="border: none;"><td style="border: none;">
+    		<div style="margin-right: 2cm;"><table style="border: 1px solid black;;  padding: 10px; align: center;">
+        		<tr>
+					<th style=" padding: 10px; text-align: center;">Capacity<br />Unit</th>
+					<th style=" padding: 10px; align: center;">Output<br />price</th>
+					<th style=" padding: 10px; align: center;">Production<br />Cost</th>
+					<th style=" padding: 10px; align: center;">Unit<br />Value</th>
+					<th style=" padding: 10px; align: center;">Permit Value<br />(for this<br />capacity unit)</th>
+				</tr>
+        {% for field, plant in bid_table %}
+        		<tr><td style=" padding: 10px; text-align: center;">{{ forloop.counter }}</td>
+					<td style=" padding: 10px; text-align: center;">{{ plant.3 }}</td>
+					<td style=" padding: 10px; text-align: center;">{{ plant.0 }}</td>
+					<td style=" padding: 10px; text-align: center;">{{ plant.1 }}</td>
+					<td style=" padding: 10px; text-align: center;">{{ plant.2 }}</td>
+				</tr>
+        {% endfor %}
+			</table></div>
+		</td><td style="border: none;">
+			
+    		<table style="border: 1px solid black;;  padding: 10px; align: center;">
+        		<tr>
+					<th style=" padding: 10px; align: center;"><h4>Enter Bids</h4>
+				{%if player.emission_intensity > 1 %}<span style="font-size: 14px;">
+					(Each bid is for {{player.emission_intensity}} permits, <br />so
+					your cost will be <br />twice the bid amount.)</span>
+				{% endif %}</th>
+				</tr>
+        {% for field in bid_entries %}
+			<tr align="center">
+			<td align="center" style=" padding: 10px;"><table style="border-style: none; "> <tr  style="border-style: none; ">
+				<td align="center" style="border-style: none;" >{{ field }}</td></tr> </table></td>
+			</tr>
+        {% endfor %}
+			</table>
+		</td>
+	</tr>
+    </table><br />
+
+
+    {% next_button %}
+	
+	<hr><br />
+	<table>
+		<tr>
+		<th>Round</th>
+        {% for round in table_data.round_numbers %}
+			<th> {{ round }}</th>
+        {% endfor %}
+		</tr>
+		<tr>
+			<td>Permits available</td>
+        {% for cap in table_data.period_caps %}
+			<td> {{ cap }}</td>
+        {% endfor %}
+		</tr>
+		<tr>
+			<td>Permit demand<br />at full capacity</td>
+        {% for full_capacity_demand in table_data.full_capacity_permit_demand %}
+			<td> {{ full_capacity_demand }}</td>
+        {% endfor %}
+		</tr>
+		<tr>
+			<td>Output price</td>
+        {% for output_price in table_data.output_prices %}
+			<td> {% if output_price %}{{ output_price }}{% endif %}</td>
+        {% endfor %}
+		</tr>
+		<tr>
+			<td>Auction price</td>
+        {% for auction_price in table_data.auction_prices %}
+			<td> {% if auction_price %}{{ auction_price }} {% endif %}</td>
+        {% endfor %}
+		</tr>
+	</table>
+	
+	
+{% endblock %}
+
+{% block styles %}
+
+    <!-- define a style -->
+	<style>
+	table, th, td {
+	    border: 1px solid black;
+	    border-collapse: collapse;
+		font-size: 1em;
+	}
+	th, td {
+	    padding: 5px;
+	    text-align: left;
+	}
+	p {
+	    font-family: verdana;
+	    font-size: 1.1em;
+	}
+	li {
+	    font-family: verdana;
+	    font-size: 1.1em;
+		padding-bottom: 8px;
+		padding-left: 0px;
+		
+	}
+	</style>
+
+
+{% endblock %}
+

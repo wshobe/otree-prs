@@ -1,0 +1,49 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Instructions: Page 2
+{% endblock %}
+
+{% block content %}
+
+<h3>Obtaining permits</h3>
+
+<ul>
+	<li>In each period, you may buy permits at auction, and the prices paid for these permits will be added to your costs. All producers will be obtaining their permits through the auction. In this session, there are {{session.config.num_demo_participants}} producers.</li>
+
+	<li>There is a limited supply of permits for sale at auction. The number of permits for sale will start at {{session.config.initial_cap}} in the first period and will fall by {{session.config.cap_decrement}} each subsequent period.</li>
+
+	<li>In each period's auction, you will be able to make a number of bids for permits, and for each permit bid, you will specify a price that is the maximum that you are willing to pay in the auction for that permit. You may bid different values for each bid that you make. As the supply of permits falls over time, fewer will be available to buy at auction. <!-- Your bids are only limited by your cash reserves. --></li>
+
+	<li>The bids will be sorted from high to low, and orders will be filled in that order until the available supply is exhausted. All permits will be sold in the auction at a single uniform price. The price is set to the value of the first bid that is <i>not</i> filled, that is, the first rejected bid. So, for example, if there are 4 permits for sale, and the bids are $10, $9, $8, $8,and $6, the first four bids will be successful and the last bid will be rejected. The price the winning bidders pay will be $6, the value of the first rejected bid. Note that the winning bids will generally be higher than (or possibly equal to) the price actually paid for the permits. Ties will be resolved by a random device.</li>
+
+	<li> The auction will have a reserve price of {{ Constants.reserve_price }}. No bids below this amount will be allowed. Any permits not sold at the auction (if there are any) will simply be retired and will not be sold at a later time.</li>
+
+</ul>
+
+    {% next_button %}
+{% endblock %}
+
+{% block styles %}
+
+    <!-- define a style -->
+	<style>
+	table, th, td {
+	    border: 1px solid black;
+	    border-collapse: collapse;
+		font-size: 1em;
+	}
+	th, td {
+	    padding: 5px;
+	    text-align: left;
+	}
+	ul, li {
+	    font-family: verdana;
+	    font-size: larger;
+		padding-bottom: 10px;
+	}
+	</style>
+
+
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Results for Round {{ subsession.round_number }}, Player #{{player.id_in_subsession}}
+{% endblock %}
+
+{% block content %}
+
+    <table style="width: 100%;  padding-left: 10px;padding-right: 10px; text-align: left;">
+		<tr><td style="width: 50%;text-align: left;">
+    		<br />
+			<ul>
+			<li>You purchased {{ player.permits_purchased_auction }} 
+				permit{%if player.permits_purchased_auction > 1  %}s{% endif %} in the auction for {{ spent_auction }}.  
+			</li>
+    		{% if player.min_production > 0 %}
+			<li>You are required to produce with at least {{ player.min_production }} plant
+				{% if player.min_production > 1 %}s{% endif %}.</li>
+			{% endif %}
+			<li>You ran {{ player.production_amount }} plant{%if player.production_amount != 1 %}s{% endif %} 
+				and used {{permits_used}}
+				permit{%if permits_used != 1 %}s{% endif %}.<br />
+				&nbsp;&nbsp;&nbsp;(Each of your plants requires {{ player.emission_intensity }} 
+				permit{%if player.emission_intensity > 1 %}s{% endif %} to operate.)</li>
+    		{% if player.penalty < 0 %}
+    		<li><b>You paid <span style="color: red">{{ penalty }}</span> in penalties this period because you did not own enough permits to cover your production.</b></li>
+			{% endif %}
+			<li>Your earnings from the sale of your product were: {{earnings}}.
+    		<li>You now own {{ player.permits }} 
+				permit{%if player.permits == 1 %}{% else %}s{% endif %}.</li>
+    		<li>Your current cash balance is <b>{{ player.money }}</b>. </li>
+			</ul>
+		</td>
+		<td style="width: 50%;text-align: left;">
+			<ul> 
+			<li>Output price this period: <b>{{ subsession.output_price }}</b> per unit produced.</li>
+			<li>Permits for sale at auction this period: {{ permits_available }}</li>
+			<li>Permits sold in the auction: {{subsession.number_sold_auction}}</li>
+			{% if session.config.ecr_treatment != 'None' %}	
+			<li>Permits retired due to low bids in the auction: {{subsession.ecr_reserve_amount_used}}</li>
+			{% endif %}
+			<li>Permits released from the price containment reserve: {{subsession.pcr_amount_added}}</li>
+			<li><em>Auction price: <b>{{subsession.auction_price}}</b>.</em></li>
+		</ul>
+		</td></tr>
+    </table>
+	<br />
+
+    {% next_button %}
+
+	<hr><br />
+	<table>
+		<tr>
+		<th>Round</th>
+        {% for round in table_data.round_numbers %}
+			<th> {{ round }}</th>
+        {% endfor %}
+		</tr>
+		<tr>
+			<td>Permits available</td>
+        {% for cap in table_data.period_caps %}
+			<td> {{ cap }}</td>
+        {% endfor %}
+		</tr>
+		<tr>
+			<td>Permit demand<br />at full capacity</td>
+        {% for full_capacity_demand in table_data.full_capacity_permit_demand %}
+			<td> {{ full_capacity_demand }}</td>
+        {% endfor %}
+		</tr>
+		<tr>
+			<td>Output price</td>
+        {% for output_price in table_data.output_prices %}
+			<td> {% if output_price %}{{ output_price }}{% endif %}</td>
+        {% endfor %}
+		</tr>
+		<tr>
+			<td>Auction price</td>
+        {% for auction_price in table_data.auction_prices %}
+			<td> {% if auction_price %}{{ auction_price }} {% endif %}</td>
+        {% endfor %}
+		</tr>
+	</table>
+
+
+{% endblock %}
+
+{% block styles %}
+
+    <!-- define a style -->
+	<style>
+	table, th, td {
+	    border: 1px solid black;
+	    border-collapse: collapse;
+		font-size: 1.1em;
+	}
+	th, td {
+	    padding: 5px;
+	    text-align: center;
+	}
+	</style>
+
+    <!-- or reference a static file -->
+
+{% endblock %}
+
