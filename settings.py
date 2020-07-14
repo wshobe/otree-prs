@@ -6,73 +6,27 @@ import dj_database_url
 import otree.settings
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-#print(BASE_DIR)
-# the environment variable OTREE_PRODUCTION controls whether Django runs in
-# DEBUG mode. If OTREE_PRODUCTION==1, then DEBUG=False
-if environ.get('OTREE_PRODUCTION') not in {None, '', '0'}:
-    DEBUG = False
-else:
-    DEBUG = True
-OTREE_PRODUCTION = 0
+
+#BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
+# in SESSION_CONFIGS, except those that explicitly override it.
+# the session config can be accessed from methods in your apps as self.session.config,
+# e.g. self.session.config['participation_fee']
 DEBUG = True
-ADMIN_USERNAME = 'admin'
+#ADMIN_USERNAME = 'admin'
 
 # for security, best to set admin password in an environment variable
 #ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
-ADMIN_PASSWORD = "pw"
+#ADMIN_PASSWORD = "pw"
 # don't share this with anybody.
-SECRET_KEY = 'l)2(&wh@^_l9@e04v20f#ne-*hw_z!94dz(igf$_m^ifu3g4mp'
-
-DATABASES = {
-    'default': dj_database_url.config(
-        default='sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
-    )
-}
-# AUTH_LEVEL:
-# If you are launching a study and want visitors to only be able to
-# play your app if you provided them with a start link, set the
-# environment variable OTREE_AUTH_LEVEL to STUDY.
-# If you would like to put your site online in public demo mode where
-# anybody can play a demo version of your game, set OTREE_AUTH_LEVEL
-# to DEMO. This will allow people to play in demo mode, but not access
-# the full admin interface.
-
-AUTH_LEVEL = environ.get('OTREE_AUTH_LEVEL')
-AUTH_LEVEL = 'STUDY'
-# setting for integration with AWS Mturk
-#AWS_ACCESS_KEY_ID = environ.get('AWS_ACCESS_KEY_ID')
-#AWS_SECRET_ACCESS_KEY = environ.get('AWS_SECRET_ACCESS_KEY')
-
-
-# e.g. EUR, CAD, GBP, CHF, CNY, JPY
-REAL_WORLD_CURRENCY_CODE = 'USD'
-USE_POINTS = False
+#SECRET_KEY = 'l)2(&wh@^_l9@e04v20f#ne-*hw_z!94dz(igf$_m^ifu3g4mp'
 
 
 
 SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00, participation_fee=0.00, doc=""
 )
-
-LANGUAGE_CODE = 'en'
-
-
-# SENTRY_DSN = ''
-
-DEMO_PAGE_INTRO_TEXT = """
-oTree: Permit Experiments
-"""
-
-#ROOM_DEFAULTS = {}
-
-ROOMS = [
-    {
-        'name': 'econ_lab',
-        'display_name': 'Economics Lab',
-        'participant_label_file': 'participants.txt',
-    },
-]
-
 
 
 SESSION_CONFIGS = [
@@ -140,7 +94,33 @@ SESSION_CONFIGS = [
     }
 ]
 
+# ISO-639 code
+# for example: de, fr, ja, ko, zh-hans
+LANGUAGE_CODE = 'en'
 
+# e.g. EUR, GBP, CNY, JPY
+REAL_WORLD_CURRENCY_CODE = 'USD'
+USE_POINTS = False
+
+ROOMS = [
+    dict(
+        name='econ101',
+        display_name='Econ 101 class',
+        participant_label_file='_rooms/econ101.txt',
+    ),
+    dict(name='live_demo', display_name='Room for live demo (no participant labels)'),
+]
+
+ADMIN_USERNAME = 'admin'
+# for security, best to set admin password in an environment variable
+ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
+
+DEMO_PAGE_INTRO_HTML = """
+Here are some oTree games.
+"""
+
+# don't share this with anybody.
+SECRET_KEY = 'p95@c5f=^b3z55a+-ra67(-hj=_a9@fixrdj)n!v03p+goe+xd'
 
 INSTALLED_APPS = ['otree']
 
