@@ -114,9 +114,14 @@ ROOMS = [
 ADMIN_USERNAME = 'admin'
 # for security, best to set admin password in an environment variable
 ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
+OTREE_PRODUCTION = 1
+DEBUG = False
+OTREE_AUTH_LEVEL="STUDY"
+# for security, best to set admin password in an environment variable
+#ADMIN_PASSWORD = "pw"
 
 DEMO_PAGE_INTRO_HTML = """
-Here are some oTree games.
+oTree: Permit Experiments
 """
 
 # don't share this with anybody.
