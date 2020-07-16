@@ -170,7 +170,7 @@ class Player(BasePlayer):
     computing_ID = models.StringField()
     money = models.CurrencyField(initial=0)
     permits = models.PositiveIntegerField(initial=0)
-    #starting_permits = models.PositiveIntegerField(initial=0)
+    starting_permits = models.PositiveIntegerField(initial=0)
     capacity = models.PositiveIntegerField()
     emission_intensity = models.PositiveIntegerField()
     permits_purchased_auction = models.PositiveIntegerField()

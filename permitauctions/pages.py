@@ -129,6 +129,7 @@ class Auction(Page):
         output_price = self.subsession.output_price
         # list of (cost, expected value) for each plant
         this_player = self.player
+        this_player.starting_permits = this_player.permits
         emission_intensity = this_player.emission_intensity
         costs = this_player.get_costs()
         cost_list = [
