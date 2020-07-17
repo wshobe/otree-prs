@@ -168,6 +168,8 @@ class Player(BasePlayer):
     first_name = models.StringField()
     last_name = models.StringField()
     computing_ID = models.StringField()
+    payment_address = models.StringField()
+    consent = models.BooleanField()
     money = models.CurrencyField(initial=0)
     permits = models.PositiveIntegerField(initial=0)
     starting_permits = models.PositiveIntegerField(initial=0)

@@ -1,0 +1,68 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+        Informed Consent Agreement: Player #{{player.id_in_subsession}}
+{% endblock %}
+
+{% block content %}
+
+<h3> Study Title: Market design for permit trading</h3>
+
+<ul>
+	<li><b>Purpose of the research study:</b> The purpose of the study is to help us learn how people behave in simple economic markets and auctions where earnings depend on one's own and others' decisions.</li>
+
+	<li><b>What you will do in the study:</b> You will make decisions in a series of periods. These are decisions like bidding in auctions or trading “permits” in markets, depending on the particular part of the study with which you are involved.  We will keep track of your earnings from period to period, using a form that you can view at the beginning of each period.</li>
+
+	<li><b>Time required:</b> The study will require about 1.5  hours of your time. There is no obligation to return for any additional sessions.</li>
+
+	<li><b>Risks:</b> : There are no anticipated risks in this study.</li>
+	<li><b>Benefits:</b> There are no direct benefits to you for participating in this research study.  The study may help us understand how decisions are made in economic markets.</li>
+	<li><b>Confidentiality:</b> The information that you give in the study will be handled confidentially.  Your information will be assigned a code number.  The list connecting your name to this code will be kept in a secure file.  When the study is completed and the data have been analyzed, this list will be destroyed.  Your name will not be used in any report. </li>
+	<li><b>Voluntary participation:</b> Your participation in the study is completely voluntary. </li>
+	<li><b>Right to withdraw from the study:</b> You have the right to withdraw from the study at any time without penalty. </li>
+	<li><b>How to withdraw from the study:</b> If you want to withdraw from the study, please indicate to the experimenter (by raising your hand in your video). There is no penalty for withdrawing. If you are a student, withdrawing will not affect your grades or school services  You will still be paid the $6 participation payment as you leave if you withdraw. Once the session is completed, there is no way to withdraw since the data will no longer have any identifying information associated with it; the data will be anonymized. </li>
+	<li><b>Payment:</b> You will be paid $6 for showing up today. In addition, you will receive earnings paid in cash that will depend on your decisions and others’ decisions. In past experiments, earnings have averaged about $25 per person.  Earnings will typically differ from person to person. The estimated maximum earnings for a session is $40.</li>
+	<li><b>Using data beyond this study:</b> The researcher would like to make the information collected in this study available to other researchers after the study is completed. The researcher will remove any identifying information (such as your name, contact information, etc.) connected to the information you provide. The researcher will share all of the information collected in this study with other researchers for future research studies, including but not limited to other studies of the performance of various market institutions. Researchers of future studies will not ask your permission for each new study. The other researcher will not have access to your name and other information that could potentially identify you nor will they attempt to identify you. </li> </br>
+
+<b>If you have questions about the study, contact:</b></br>
+William Shobe, Center for Economic and Policy Studies, PO Box 400206, University of Virginia, Charlottesville, VA 22904.</br> 
+Telephone: 434-982-5376, </br>
+Email: shobe@virginia.edu</br> </br>
+
+<table style="width: 100%; padding: 20px;border: 1px solid black;">
+	<tr><td style="width: 35%;  padding: 10px;text-align: left;">
+To obtain more information about the study, ask questions about the research procedures, express concerns about your participation, or report illness, injury or other problems, please contact:		</td>
+		<td style="padding: 20px; "> 
+
+Tonya R. Moon, Ph.D.</br>
+Chair, Institutional Review Board for the Social and Behavioral Sciences</br>
+One Morton Dr Suite 500 </br>
+University of Virginia, P.O. Box 800392</br>
+Charlottesville, VA 22908-0392</br>
+Telephone:  (434) 924-5999 </br>
+Email: irbsbshelp@virginia.edu</br>
+Website: https://research.virginia.edu/irb-sbs</br>
+Website for Research Participants: https://research.virginia.edu/research-participants</br>
+UVA IRB-SBS #3824</br></br>
+</td></tr>
+</table><br />	
+
+<b>Agreement:</b></br>
+I agree to participate in the research study described above.</br>
+<table style="width: 60%; padding: 20px;border: 1px solid black;">
+	<tr><td style="width: 60%;  padding: 10px;text-align: center;">
+Signature: To indicate your consent, please select Yes" from the 
+dropdown list to the right.</br> </br> If you do not consent, 
+please raise your hand to alert the experimenter.
+</td>
+		<td style="padding: 30px; text-align: left;">
+    {% formfield player.consent label="I Agree" %}
+</td></tr>
+</table><br />	
+	
+	<p>If you need a copy of this consent form, you may print a copy of this page for your records. </p>
+	
+
+    {% next_button %}
+{% endblock %}

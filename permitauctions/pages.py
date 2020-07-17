@@ -37,9 +37,17 @@ def vars_for_all_templates(self):
         'rounds': list(range(this_session.config['last_round'])),
     }
 
+class Consent(Page):
+    form_model = Player
+    form_fields = ['consent']
+
+    def is_displayed(self):
+        return self.subsession.show_instructions
+
+
 class Signin(Page):
     form_model = Player
-    form_fields = ['first_name', 'last_name', 'computing_ID']
+    form_fields = ['first_name', 'last_name', 'computing_ID', 'payment_address']
 
     def is_displayed(self):
         # Putting this code here is hacky; see models.py for why this isn't in creating_session
@@ -52,7 +60,7 @@ class Signin(Page):
                 player.money = old_player.money
                 player.permits = old_player.permits
                 player.computing_ID = old_player.computing_ID
-        return self.round_number == 1
+        return (self.round_number == 1 and self.player.consent)
 
 class SigninWaitPage(WaitPage):
 #    def is_displayed(self):
@@ -411,6 +419,7 @@ class Results(Page):
 
 
 page_sequence = [
+    Consent,
     Signin,
     SigninWaitPage,
     Instructions1,
