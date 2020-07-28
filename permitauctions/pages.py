@@ -47,7 +47,7 @@ class Consent(Page):
 
 class Signin(Page):
     form_model = Player
-    form_fields = ['first_name', 'last_name', 'computing_ID', 'payment_address']
+    form_fields = ['first_name', 'last_name', 'computing_ID', 'sona_ID', 'payment_address']
 
     def is_displayed(self):
         # Putting this code here is hacky; see models.py for why this isn't in creating_session
