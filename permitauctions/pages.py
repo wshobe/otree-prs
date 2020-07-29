@@ -59,7 +59,7 @@ class Signin(Page):
                 old_player = player.in_previous_rounds()[-1]
                 player.money = old_player.money
                 player.permits = old_player.permits
-                player.computing_ID = old_player.computing_ID
+                player.computing_id = old_player.computing_ID
         return (self.round_number == 1 and self.player.consent)
 
 class SigninWaitPage(WaitPage):
